@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" />
+
+    <!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+
+    <!-- FontAwasome Font Icon CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .icon-action:hover {
+             color: black !important;
+        }
+        .todoContainer{
+            width: 100%;
+            height: 200px;
+            /* background-color: red                                                                                                                            */
+        }
+    </style>
+</head>
+<body class="bg-indigo" >
+   
+    <div class="container">
+        <div class="w-75 mx-auto" id="notification-container">
+
+            <div class="alert alert-secondary alert-dismissible fade show mt-5 p-2 text-center d-flex justify-content-between" role="alert">
+                <i class="bi bi-exclamation-circle-fill mx-2"></i>
+                <span class="position-absolute top-50 start-50 translate-middle">Please Enter a Valid <strong class="mx-1 text-primary"> ToDo</strong></span>
+                <button type="button" class="btn-close pb-1" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            <!-- <div class="toast align-items-center text-bg-primary border-4" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                  <div class="toast-body">
+                    Hello, world! This is a toast message.
+                  </div>
+                  <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div> -->
+        </div>
+        <h1 class="text-center mt-5 text-primary"> Todo   </h1>
+        <div class="input-group mb-3 w-50 mx-auto mt-3">
+            <input type="text" id="todoInputBox" class="form-control text-center text-primary border-primary" placeholder=" Enter the todo item..." aria-describedby="button-addon2" >
+            <button class="btn btn-outline-primary" type="button" id="button-addon3" onclick=addToDoItem()>Add ToDo</button>
+        </div>
+        <ul class="list-group w-50 mx-auto" id="todoResult"> 
+
+        </ul>
+        <div id ="todoConatiner"  class="todoContainer position-relative">  
+
+           
+        </div>
+
+    </div>
+    <script>
+        let todoList = [];
+        let localTodos = localStorage.getItem('todos');
+        let todos = JSON.parse(localTodos);
+        console.log('base toDo',todos);
+
+        function addToDoItem(){
+            console.log("function Called");
+            let todo = document.getElementById("todoInputBox").value;
+            // console.log("todo",todo);
+            if(todo.length > 0){
+                todoList.push({"id":todos.length+1, "todo": todo, "status": "not-done" });
+                document.getElementById("todoInputBox").value = "";
+                document.getElementById("todoInputBox").reset();
+                showToDo();
+                // localStorage.setItem('todos', JSON.stringify(todoList));
+                // getToDoItem()
+            }else{
+                document.getElementById("notification-container")
+                .innerHTML = `<div class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                                <div class="d-flex">
+                                    <div class="toast-body">
+                                        Please Enter a Valid TODO
+                                    </div>
+                                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                </div>
+                              </div>`;
+            }
+            
+        }
+
+        function showToDo(){
+            if(todoList.length){
+                let ele = '';
+                for(let i=0; i<todoList.length;i++){
+
+                    ele +=  `<li class="list-group-item list-group-item-action list-group-item-primary position-relative">
+                                        <input class="form-check-input me-3" type="checkbox" value="" id="${todoList[i].todo}">
+                                        <label class="form-check-label" for="${todoList[i].todo}">${todoList[i].todo}</label>
+                                        <i class="bi bi-pencil-square position-absolute top-1 end-0 me-5 text-secondary icon-action"></i>
+                                        <i class="bi bi-trash-fill position-absolute top-1 end-0 me-3 text-secondary icon-action"></i>`;
+                }
+                document.getElementById("todoResult").innerHTML = ele;     
+
+                // for(let i=0; i<todoList.length;i++){
+
+                //     let ele =  `<li class="list-group-item list-group-item-action list-group-item-primary position-relative">
+                //                         <input class="form-check-input me-3" type="checkbox" value="" id="${todoList[i].todo}">
+                //                         <label class="form-check-label" for="${todoList[i].todo}">${todoList[i].todo}</label>
+                //                         <i class="bi bi-pencil-square position-absolute top-1 end-0 me-5 text-secondary icon-action"></i>
+                //                         <i class="bi bi-trash-fill position-absolute top-1 end-0 me-3 text-secondary icon-action"></i>`;
+                //     document.getElementById("todoResult").innerHTML = ele; 
+                // }
+                
+            }
+            else{
+                    let element = "<h3 class='text-center text-secondary position-absolute top-50 start-50 translate-middle'>No More ToDos</h3>";
+                    document.getElementById("todoConatiner").innerHTML = element;
+                }
+        }
+        // function getToDoItem(){
+        //     if (localTodos) {
+        //         if(todos.length){
+        //             for(i=0; i<todos.length;i++){
+        //                 let element =  `<li class="list-group-item list-group-item-action list-group-item-primary position-relative">
+        //                                 <input class="form-check-input me-3" type="checkbox" value="" id="${todos.todo}">
+        //                                 <label class="form-check-label" for="${todos.todo}">${todos.todo}</label>
+        //                                 <i class="bi bi-pencil-square position-absolute top-1 end-0 me-5 text-secondary icon-action"></i>
+        //                                 <i class="bi bi-trash-fill position-absolute top-1 end-0 me-3 text-secondary icon-action"></i>`;
+        //                 // document.getElementById("todoResult").innerHTML += element;
+        //             }
+                   
+        //         }
+        //         else{
+        //             console.log("No more todos")
+        //             let element = "<h3 class='text-center text-secondary position-absolute top-50 start-50 translate-middle'>No More ToDos</h3>";
+        //             // document.getElementById("todoConatiner").innerHTML = element;
+        //         }
+        //     }else{
+        //         localStorage.setItem('todos', JSON.stringify(todoList));
+        //     }
+        // }
+        // window.onload = function () {
+        // // function updateToDoList()
+        //     getToDoItem()
+        // };
+    </script>
+ 
+</body>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+</html>
+
+  <!--    <li class="list-group-item list-group-item-action list-group-item-primary position-relative">
+                  <input class="form-check-input me-3" type="checkbox" value="" id="firstCheckbox">
+                  <label class="form-check-label" for="firstCheckbox">First checkbox</label>
+                  <i class="bi bi-pencil-square position-absolute top-1 end-0 me-5 text-secondary icon-action"></i>
+                  <i class="bi bi-trash-fill position-absolute top-1 end-0 me-3 text-secondary icon-action"></i>
+
+                </li>
+                <li class="list-group-item list-group-item-action list-group-item-primary">
+                  <input class="form-check-input me-3" type="checkbox" value="" id="secondCheckbox">
+                  <label class="form-check-label" for="secondCheckbox">Second checkbox</label>
+                  <i class="bi bi-pencil-square position-absolute top-1 end-0 me-5 text-secondary icon-action"></i>
+                  <i class="bi bi-trash-fill position-absolute top-1 end-0 me-3 text-secondary icon-action"></i>
+                </li>
+                <li class="list-group-item list-group-item-action list-group-item-primary">
+                  <input class="form-check-input me-3" type="checkbox" value="" id="thirdCheckbox">
+                  <label class="form-check-label" for="thirdCheckbox">Third checkbox</label>
+                  <i class="bi bi-pencil-square position-absolute top-1 end-0 me-5 text-secondary icon-action"></i>
+                  <i class="bi bi-trash-fill position-absolute top-1 end-0 me-3 text-secondary icon-action"></i>
+                </li> -->
