@@ -1,0 +1,89 @@
+@import "rsuite/dist/rsuite.css";
+*{
+  padding : 0;
+  margin : 0;
+}
+.innerpage{
+  min-height: 81vh;
+}
+.nav-ul{
+  display:flex;
+  justify-content: flex-start;
+}
+.nav-ul li{
+  list-style-type: none;
+}
+
+.nav-ul Link{
+  color:white;
+}
+.nav-ul link :hover{
+  color: yellow;
+}
+.nav-ul button :hover{
+  background-color: yellow;
+}
+
+.login-wrapper{
+  width :100%;
+  height:100%;
+  display : flex;
+  justify-content: center;
+}
+
+.login-innerwrapper{
+  margin-top: 90px;
+  width:500px;
+  border-radius: 10px;
+  border : 3px soild blue;
+}
+
+.register-wrapper{
+  width :100%;
+  height:100%;
+  display : flex;
+  justify-content: center;
+}
+
+.register-innerwrapper{
+  margin-top: 50px;
+  width:650px;
+  border-radius: 10px;
+}
+.courselist-wrapper{
+  margin: 0 40px;
+  width:100%;
+  display:inline-block!important;
+}
+.courselist{
+  margin: 15px 11px;
+}
+.courselist-card{
+  margin: 0 auto;
+  width:250px !important;
+  display:inline-block!important;
+}
+.courselist-body{
+  min-height: 175px;
+}
+.maincard{
+  min-width: 80%;
+  min-height: 400px!important;
+  max-height: 500px!important;
+}
+.side-cards{
+  width:20%;
+  padding-left: 20px;
+}
+.overall-cards{
+  max-height: 700px ;
+}
+.main-card-steady{
+  min-height: 300px ;
+  max-height: 500px ;
+}
+
+.side-cards{
+  max-height: 700px ;
+  overflow-y: scroll;
+}
